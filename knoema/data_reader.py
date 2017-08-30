@@ -18,12 +18,11 @@ class DataReader(object):
             raise ValueError('The following dimension(s) are not set: {}'.format(', '.join(out_of_filter_dim_names)))
 
     def _get_dim_members(self, dim, splited_values):
+        if splited_values == ['*']:
+            return [item.key for item in dim.items]
 
         members = []
         for value in splited_values:
-            if value is None:
-                raise ValueError('Selection for dimension {} is empty'.format(dim.name))
-
             member = dim.findmember_by_id(value)
             if member is None:
                 member = dim.findmember_by_name(value)
