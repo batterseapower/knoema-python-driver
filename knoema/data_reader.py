@@ -1,6 +1,7 @@
 """This module contains data definitions for Knoema client"""
 
 from datetime import datetime
+import six
 import pandas
 import knoema.api_definitions as definition
 
@@ -54,7 +55,11 @@ class DataReader(object):
                 time_range = value
                 continue
 
-            splited_values = value.split(';')
+            if isinstance(value, six.string_types):
+                splited_values = value.split(';')
+            else:
+                splited_values = value
+
             if definition.isequal_strings_ignorecase(name, 'frequency'):
                 pivotreq.frequencies = splited_values
                 continue

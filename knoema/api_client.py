@@ -11,6 +11,7 @@ import random
 import string
 import io
 import os
+import six
 import knoema.api_definitions as definition
 
 def _random_string(length):
@@ -29,7 +30,7 @@ def _response_to_json(resp):
         raise ValueError('Error {} from server:{}', resp.status, str_response)
 
     obj_resp = json.loads(str_response)
-    if isinstance(obj_resp, str):
+    if isinstance(obj_resp, six.string_types):
         raise ValueError(obj_resp)
 
     return obj_resp
